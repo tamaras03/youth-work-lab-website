@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Work Lab | Home</title>
+    <style>
+        /* --- THE FIX: Prevents elements from stretching past 100% width --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden; /* Kills the horizontal scrollbar */
+        }
+
+        /* CSS Variables */
+        :root {
+            --primary-blue: #425682; 
+            --accent-orange: #F26B26;
+            --bright-cyan: #008BF8;
+            --warm-yellow: #FFC024;
+            --bg-light: #F8F9FA;
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- RESPONSIVE HEADER & NAVIGATION --- */
+        header.nav-header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%; /* Ensures header never breaks out of the screen */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0; /* Prevents logo from squishing */
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Desktop Menu */
+        nav.nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap; /* Allows links to wrap safely if screen gets too tight */
+        }
+
+        nav.nav-menu a {
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            white-space: nowrap; /* Keeps link words together */
+        }
+
+        nav.nav-menu a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Hamburger Button (Hidden on Desktop) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        /* --- HERO SECTION --- */
+        .header-cover {
+            background: linear-gradient(to right, var(--primary-blue), var(--bright-cyan));
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-overlay {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-overlay h1 {
+            font-size: 3.5rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-overlay p {
+            font-size: 1.25rem;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* --- CONTENT & GALLERY --- */
+        .container {
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .gallery-section {
+            margin-bottom: 5rem;
+        }
+
+        .gallery-title {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--warm-yellow);
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 1.6rem;
+        }
+
+        .section-desc {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .slider-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 20px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-blue) transparent;
+        }
+
+        .slider-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .slider-container::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 10px;
+        }
+
+        .slide {
+            flex: 0 0 45%;
+            min-width: 320px;
+            height: 280px;
+            background-color: #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .slide:hover img {
+            transform: scale(1.08);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            margin-top: 5rem;
+            width: 100%;
+        }
+
+        /* ========================================= */
+        /* MOBILE RESPONSIVE RULES                   */
+        /* ========================================= */
+        @media (max-width: 900px) {
+            nav.nav-menu {
+                gap: 12px; /* Shrinks the gap between links on medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-cover { height: 45vh; }
+            .hero-overlay h1 { font-size: 2.2rem; }
+            .slide { flex: 0 0 85%; }
+            
+            /* Show Hamburger Menu */
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* Hide default nav and style for mobile dropdown */
+            nav.nav-menu {
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100vw; /* Take up exact full width of viewport */
+                background-color: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                padding: 1rem 0;
+            }
+
+            /* This class is added by JavaScript when the menu is clicked */
+            nav.nav-menu.active {
+                display: flex; 
+            }
+
+            /* Make links span the full width of the mobile menu */
+            nav.nav-menu a {
+                padding: 15px 5%;
+                border-bottom: 1px solid #eee;
+                width: 100%;
+                text-align: left;
+            }
+
+            nav.nav-menu a:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="nav-header">
+        <a href="index.html" class="logo">
+            <img src="images/IMG_8365.PNG" alt="Youth Work Lab Logo" class="logo-img">
+        </a>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="activities.html">Activities</a>
+            <a href="outcomes.html">Outcomes</a>
+            <a href="gallery.html">Gallery</a>
+        </nav>
+    </header>
+
+    <section class="header-cover">
+        <div class="hero-overlay">
+            <h1>Youth Work Lab</h1>
+            <p>Testing and applying modern digital tools for better youth engagement.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <section class="gallery-section">
+            <h2 class="gallery-title">Study Visit to CED</h2>
+            <p class="section-desc">Our group explored community development and youth initiatives at the Center for Education and Development in Tearce.</p>
+            <div class="slider-container">
+                <div class="slide"><img src="images/ced1.jpeg" alt="CED Visit Highlights"></div>
+                <div class="slide"><img src="images/ced2.jpeg" alt="Meeting local volunteers"></div>
+                <div class="slide"><img src="images/ced3.jpeg" alt="Organization mission briefing"></div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <h2 class="gallery-title">Intercultural Evenings</h2>
+            <p class="section-desc">Two major evenings celebrating traditional dances, music, and facts from over 10 European countries.</p>
+            <div class="slider-container">
+                <div class="slide"><img src="images/ceska.jpeg" alt="Greek Limba Kiko dance"></div>
+                <div class="slide"><img src="images/interkultural.jpeg" alt="Italian jester performance"></div>
+                <div class="slide"><img src="images/serbian.jpeg" alt="Serbian traditional dance"></div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <h2 class="gallery-title">Workshop Toolbox</h2>
+            <p class="section-desc">Practicing non-formal education methods like Name Juggling, Trust Walks, and digital tool mapping.</p>
+            <div class="slider-container">
+                <div class="slide"><img src="images/blind4.jpeg" alt="Trust Walk exercise"></div>
+                <div class="slide"><img src="images/workshop.jpeg" alt="Digital footprint mapping"></div>
+                <div class="slide"><img src="images/namegame.jpeg" alt="Team target ball competition"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>YOUTH WORK LAB</strong> | Erasmus+ Training Course 2026</p>
+        <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 10px;">Co-funded by the European Union</p>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

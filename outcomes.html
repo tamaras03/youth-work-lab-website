@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outcomes | Youth Work Lab</title>
+    <style>
+        /* CSS Variables for the Logo Color Palette */
+        :root {
+            --primary-blue: #425682;
+            --accent-orange: #F26B26;
+            --bright-cyan: #008BF8;
+            --warm-yellow: #FFC024;
+            --bg-light: #F8F9FA;
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Sticky Navigation */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to right, var(--primary-blue), var(--bright-cyan));
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Content Layout */
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--warm-yellow);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .content-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Booklet Download & Embed Box */
+        .download-section {
+            background-color: #fff;
+            border: 2px dashed var(--primary-blue);
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 12px;
+            margin: 3rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .download-section:hover {
+            border-color: var(--accent-orange);
+            background-color: #f0f4f8;
+        }
+
+        .pdf-container {
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-download {
+            background-color: var(--accent-orange);
+            color: white;
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .btn-download:hover {
+            background-color: var(--warm-yellow);
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Podcast Styling */
+        .podcast-wrapper {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-orange);
+            margin-top: 15px;
+        }
+
+        .podcast-wrapper video {
+            width: 100%;
+            border-radius: 6px;
+            outline: none;
+            background-color: #000;
+        }
+
+        /* Reels Styling - UPDATED TO 3 COLUMNS */
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Forces exactly 3 columns */
+            gap: 25px;
+            max-width: 1000px; /* Widened to fit 3 items */
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent-orange);
+            text-align: center;
+        }
+
+        .video-card h3 {
+            margin-top: 0;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reel-wrapper {
+            position: relative;
+            padding-bottom: 177.77%; /* Forces a perfect 9:16 vertical Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px;
+            background-color: #000; 
+        }
+
+        .reel-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 5rem;
+        }
+
+        /* Responsive Design Updates for 3 Columns */
+        @media (max-width: 1024px) {
+            .reels-grid { grid-template-columns: repeat(2, 1fr); } /* 2 columns on tablets */
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .reels-grid { grid-template-columns: 1fr; } /* 1 column on mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/IMG_8365.PNG" alt="Youth Work Lab Logo" class="logo-img">
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="activities.html">Activities</a>
+            <a href="outcomes.html">Outcomes</a>
+            <a href="gallery.html">Gallery</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Project Outcomes</h1>
+        <p>Resources, Podcasts, and Digital Creations</p>
+    </section>
+
+    <div class="container">
+        
+        <aside class="download-section">
+            <h2 style="color: var(--primary-blue); margin-top: 0; border: none; padding: 0;">Project Booklet - Final Edition</h2>
+            <p>Get the complete guide to our methodologies, digital tools, and the results of our collaborative workshops.</p>
+            
+            <div class="pdf-container">
+                <iframe src="Booklet Final Edition.pdf#view=Fit" width="100%" height="600px" style="border: none;">
+                    This browser does not support inline PDFs. Please download the PDF to view it: <a href="Booklet Final Edition.pdf">Download PDF</a>
+                </iframe>
+            </div>
+
+            <a href="Booklet Final Edition.pdf" class="btn-download" download>
+                DOWNLOAD FULL BOOKLET (PDF)
+            </a>
+        </aside>
+
+        <section class="content-card">
+            <h2>Youth Work Lab Podcast</h2>
+            <p>Listen to our participants discuss digital youth work, their experiences during the training in Tetovo, and the future of Erasmus+ collaboration.</p>
+            
+            <div class="podcast-wrapper">
+                <video controls>
+                    <source src="images/podcast.mp4" type="video/mp4">
+                    Your browser does not support the video player.
+                </video>
+            </div>
+        </section>
+
+        <section style="margin: 4rem 0;">
+            <h2 style="text-align: center; display: block; border: none;">Digital Campaigns (Reels)</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Check out the short-form video campaigns created by our participants during the Simulation Lab.</p>
+            
+            <div class="reels-grid">
+                
+                <div class="video-card">
+                    <h3>Reel 1: Digital Tools</h3>
+                    <div class="reel-wrapper">
+                        <video controls>
+                            <source src="images/reels1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <h3>Reel 2: Youth Engagement</h3>
+                    <div class="reel-wrapper">
+                        <video controls>
+                            <source src="images/reels2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <h3>Reel 3: Project Impact</h3>
+                    <div class="reel-wrapper">
+                        <video controls>
+                            <source src="images/reels3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>YOUTH WORK LAB</strong> | Erasmus+ Training Course 2026</p>
+        <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 10px;">Co-funded by the European Union</p>
+    </footer>
+
+</body>
+</html>
