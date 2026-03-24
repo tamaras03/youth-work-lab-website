@@ -12,7 +12,7 @@
 
         html, body {
             max-width: 100%;
-            overflow-x: hidden; /* Kills the horizontal scrollbar */
+            overflow-x: hidden; 
         }
 
         /* CSS Variables */
@@ -45,14 +45,14 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            width: 100%; /* Ensures header never breaks out of the screen */
+            width: 100%; 
         }
 
         .logo {
             display: flex;
             align-items: center;
             text-decoration: none;
-            flex-shrink: 0; /* Prevents logo from squishing */
+            flex-shrink: 0; 
         }
 
         .logo-img {
@@ -67,7 +67,7 @@
             display: flex;
             gap: 20px;
             align-items: center;
-            flex-wrap: wrap; /* Allows links to wrap safely if screen gets too tight */
+            flex-wrap: wrap; 
         }
 
         nav.nav-menu a {
@@ -76,14 +76,14 @@
             font-weight: 600;
             transition: color 0.3s ease;
             font-size: 0.95rem;
-            white-space: nowrap; /* Keeps link words together */
+            white-space: nowrap; 
         }
 
         nav.nav-menu a:hover {
             color: var(--accent-orange);
         }
 
-        /* Hamburger Button (Hidden on Desktop) */
+        /* Hamburger Button */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -206,54 +206,80 @@
             width: 100%;
         }
 
-        /* ========================================= */
-        /* MOBILE RESPONSIVE RULES                   */
-        /* ========================================= */
+        /* --- EASTER EGG POPUP STYLING --- */
+        #gs-easter-egg {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(0, 0, 0, 0.85); /* Dark background */
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        #gs-easter-egg.show {
+            display: flex; /* Triggers visibility */
+        }
+
+        .gs-logo-popup {
+            width: 300px;
+            max-width: 80%;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .gs-text {
+            color: #FFC024;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* --- MOBILE RESPONSIVE RULES --- */
         @media (max-width: 900px) {
-            nav.nav-menu {
-                gap: 12px; /* Shrinks the gap between links on medium screens */
-            }
+            nav.nav-menu { gap: 12px; }
         }
 
         @media (max-width: 768px) {
             .header-cover { height: 45vh; }
             .hero-overlay h1 { font-size: 2.2rem; }
             .slide { flex: 0 0 85%; }
-            
-            /* Show Hamburger Menu */
-            .menu-toggle {
-                display: flex;
-            }
+            .menu-toggle { display: flex; }
 
-            /* Hide default nav and style for mobile dropdown */
             nav.nav-menu {
                 display: none; 
                 flex-direction: column;
                 position: absolute;
                 top: 100%;
                 left: 0;
-                width: 100vw; /* Take up exact full width of viewport */
+                width: 100vw; 
                 background-color: white;
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                 padding: 1rem 0;
             }
 
-            /* This class is added by JavaScript when the menu is clicked */
-            nav.nav-menu.active {
-                display: flex; 
-            }
-
-            /* Make links span the full width of the mobile menu */
+            nav.nav-menu.active { display: flex; }
             nav.nav-menu a {
                 padding: 15px 5%;
                 border-bottom: 1px solid #eee;
                 width: 100%;
                 text-align: left;
             }
-
-            nav.nav-menu a:last-child {
-                border-bottom: none;
-            }
+            nav.nav-menu a:last-child { border-bottom: none; }
         }
     </style>
 </head>
@@ -325,9 +351,41 @@
         <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 10px;">Co-funded by the European Union</p>
     </footer>
 
+    <div id="gs-easter-egg">
+        <img src="images/galatasarayl.jpg" alt="Galatasaray Logo" class="gs-logo-popup">
+        <div class="gs-text">1905</div>
+    </div>
+
     <script>
+        // 1. Mobile Menu Script
         document.getElementById('mobile-menu').addEventListener('click', function() {
             document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // 2. Secret 1905 Easter Egg Script
+        let typedKeys = '';
+        const secretCode = '1905';
+        const popup = document.getElementById('gs-easter-egg');
+
+        // Listen for keys pressed anywhere on the page
+        window.addEventListener('keydown', function(e) {
+            typedKeys += e.key;
+            
+            // Keep the memory short so it doesn't get overloaded (only keep last 4 keys)
+            if (typedKeys.length > secretCode.length) {
+                typedKeys = typedKeys.slice(-secretCode.length);
+            }
+
+            // If the last 4 keys match "1905", show the popup!
+            if (typedKeys === secretCode) {
+                popup.classList.add('show');
+                typedKeys = ''; // Reset so they can do it again
+            }
+        });
+
+        // Click anywhere on the popup to close it
+        popup.addEventListener('click', function() {
+            popup.classList.remove('show');
         });
     </script>
 </body>
